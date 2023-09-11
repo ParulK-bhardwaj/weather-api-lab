@@ -1,97 +1,148 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Ms Merriweather</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1 id="temp">
-        <!--Temp -->
-      </h1>
-      <h2 id="city">
-        <!--City -->
-      </h2>
-      <p id="desc">
-        <!-- Description -->
-      </p>
-      <p id="fl">
-        <!--Feels like - Temperature -->
-      </p>
-      <p id="temp_max">
-        <!-- Maximum temperature -->
-      </p>
-      <p id="temp_min">
-        <!-- Minimum temperature -->
-      </p>
-      <p id="wind">
-        <!-- Wind speed -->
-      </p>
-      <p id="pressure">
-        <!-- Pressure -->
-      </p>
-      <p id="humd">
-        <!-- humidity -->
-      </p>
-      <img id="icon" />
-      <form id="form">
-        <input 
-          id="zip" 
-          type="number" 
-          placeholder="zip code"
-          title="Please Enter a valid Zip Code"
-          pattern="^\d{5}(?:[-\s]\d{4})?$"
-        >
-        <button type="submit">Search</button>
-      </form>
-    </div>
-    <script src="index.js"></script>
-    <script>
-      // ------------------------------------------------------
-      // Developer Code
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Ms Merriweather</title>
+      <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+      <div class="container">
+        <h1 id="temp">
+          <!--Temp -->
+        </h1>
+        <img id="icon" />
+        <h2 id="city">
+          <!--City -->
+        </h2>
+        <p id="desc">
+          <!-- Description -->
+        </p>
+        <p id="fl">
+          <!--Feels like - Temperature -->
+        </p>
+        <p id="temp_max">
+          <!-- Maximum temperature -->
+        </p>
+        <p id="temp_min">
+          <!-- Minimum temperature -->
+        </p>
+        <p id="wind">
+          <!-- Wind speed -->
+        </p>
+        <p id="pressure">
+          <!-- Pressure -->
+        </p>
+        <p id="humd">
+          <!-- humidity -->
+        </p>
 
-      // Get Element refererences
-      const tempEl = document.getElementById('temp')
-      const descEl = document.getElementById('desc')
-      const pressureEl = document.getElementById('pressure')
-      const humdEl = document.getElementById('humd')
-      const tempMaxEl = document.getElementById("temp_max")
-      const tempMinEl = document.getElementById("temp_min")
-      const cityEl = document.getElementById("city")
-      const flEl = document.getElementById("fl")
-      const windEl = document.getElementById("wind")
-      const iconEL = document.getElementById("icon")
-      const formEl = document.getElementById('form')
-      const zipInput = document.getElementById('zip')
-      const apiKey = '467355df4c808dd6134a3b64e9ace282'
+        <form id="unitForm">
+          <select id="unit" name="unit">
+            <option value="metric">Metric</option>
+            <option value="imperial">Imperial</option>
+          </select>
+        </form>
+        <!-- Zip Form -->
+        <form id="zipForm">
+          <input 
+            id="zip" 
+            type="number" 
+            placeholder="zip code"
+            title="Please Enter a valid Zip Code"
+            pattern="^\d{5}(?:[-\s]\d{4})?$"
+          >
+          <button type="submit">Search by ZIP</button>
+        </form>
 
-      // callback function
-      function handleData(data) {
-        cityEl.innerHTML = `City: ${data.city}`
-        tempEl.innerHTML = `Temperature: ${data.temp}`
-        descEl.innerHTML = `Description: ${data.desc}`
-        flEl.innerHTML = `Feels Like: ${data.feels_like}`
-        pressureEl.innerHTML = `Pressure: ${data.pressure}`
-        humdEl.innerHTML = `Humidity: ${data.humidity}`
-        tempMaxEl.innerHTML = `Max Temp.: ${data.temp_max}`
-        tempMinEl.innerHTML = `Min Temp.: ${data.temp_min}`
-        windEl.innerHTML = `Wind: ${data.wind}`
-        iconEL.src = `https://openweathermap.org/img/w/${data.icon}.png`;
-      }
+        <!-- City Form -->
+        <form id="cityForm" class="form">
+          <input id="cityName" type="text" placeholder="city name"/>
+          <button type="submit">Search By City</button>
+        </form>
 
-      function handleError(err) {
-        console.log("Error:", err)
-      }
-      // Define event listeners
-      formEl.addEventListener('submit', (e) => {
-        e.preventDefault()
-        const zip = zipInput.value
-        const unit = 'metric'
-        getWeather(zip, apiKey, unit)
-          .then(handleData)
-          .catch(handleError)
-      })
+        <!-- Geo button -->
+        <form id="geoForm" class="form">
+          <input id="latitude" type="number" placeholder="Latitude">
+          <input id="longitude" type="number" placeholder="Longitude">
+          <button type="submit">Search By Coordinates</button>
+        </form>
+      </div>
+      <script src="index.js"></script>
+      <script>
+        // ------------------------------------------------------
+        // Developer Code
 
-    </script>
-  </body>
-</html>
+        // Get Element refererences
+        const tempEl = document.getElementById('temp')
+        const descEl = document.getElementById('desc')
+        const pressureEl = document.getElementById('pressure')
+        const humdEl = document.getElementById('humd')
+        const tempMaxEl = document.getElementById("temp_max")
+        const tempMinEl = document.getElementById("temp_min")
+        const cityEl = document.getElementById("city")
+        const flEl = document.getElementById("fl")
+        const windEl = document.getElementById("wind")
+        const iconEL = document.getElementById("icon")
+        const unitForm = document.getElementById("unitForm")
+        const unitSelect = document.getElementById("unit")
+        const zipInput = document.getElementById('zip')
+        const zipForm = document.getElementById("zipForm")
+        const cityInput = document.getElementById('cityName')
+        const cityForm = document.getElementById("cityForm")
+        const latitudeInput = document.getElementById("latitude")
+        const longitudeInput = document.getElementById("longitude")
+        const geoForm = document.getElementById("geoForm")
+        const apiKey = 'e4d865ea2ae49cf6c76e5abcbfe1ea92'
+
+        // callback function
+        function handleData(data) {
+          cityEl.innerHTML = `City: ${data.city}`
+          tempEl.innerHTML = `Temperature: ${data.temp}`
+          descEl.innerHTML = `Description: ${data.desc}`
+          flEl.innerHTML = `Feels Like: ${data.feels_like}`
+          pressureEl.innerHTML = `Pressure: ${data.pressure}`
+          humdEl.innerHTML = `Humidity: ${data.humidity}`
+          tempMaxEl.innerHTML = `Max Temp.: ${data.temp_max}`
+          tempMinEl.innerHTML = `Min Temp.: ${data.temp_min}`
+          windEl.innerHTML = `Wind: ${data.wind}`
+          iconEL.src = `https://openweathermap.org/img/w/${data.icon}.png`;
+        }
+
+        function handleError(err) {
+          console.log("Error:", err)
+        }
+        // Define event listeners
+        zipForm.addEventListener('submit', (e) => {
+          e.preventDefault()
+          const zip = zipInput.value
+          const unit = unitSelect.value
+            getWeatherByZip(apiKey, zip, unit)
+              .then(handleData)
+              .catch(handleError)
+        })
+
+        cityForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const city = cityInput.value
+          const unit = unitSelect.value
+          getWeatherByCity(apiKey, city, unit)
+            .then(handleData)
+            .catch(handleError)
+        })
+
+        geoForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const lat = latitudeInput.value
+          const lon = longitudeInput.value
+          const unit = unitSelect.value
+          getWeatherByGeo(apiKey, lat, lon , unit)
+            .then(handleData)
+            .catch(handleError)
+        })
+
+        unitForm.addEventListener("submit", (e) => {
+          e.preventDefault()
+        })
+        
+      </script>
+    </body>
+  </html>
