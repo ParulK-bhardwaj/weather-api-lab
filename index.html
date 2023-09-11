@@ -36,15 +36,21 @@
       const apiKey = '467355df4c808dd6134a3b64e9ace282'
 
       // callback function
-      function handleWeatherData(data) {
-        tempEl.innerHTML = data.main.temp;
-        descEl.innerHTML = data.weather[0].description;
+      function handleData(data) {
+        tempEl.innerHTML = data.main.temp
+        descEl.innerHTML = data.weather[0].description
+      }
+
+      function handleError(err) {
+        console.log("Error:", err)
       }
       // Define event listeners
       formEl.addEventListener('submit', (e) => {
         e.preventDefault()
         const zip = zipInput.value
-        getWeather(zip, apiKey, handleWeatherData)
+        getWeather(zip, apiKey)
+          .then(handleData)
+          .catch(handleError)
       })
 
     </script>
