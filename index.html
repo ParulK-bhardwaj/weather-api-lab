@@ -27,22 +27,26 @@
     <script>
       // ------------------------------------------------------
       // Developer Code
-      const apiKey = '467355df4c808dd6134a3b64e9ace282'
+
       // Get Element refererences
       const tempEl = document.getElementById('temp')
       const descEl = document.getElementById('desc')
       const formEl = document.getElementById('form')
       const zipInput = document.getElementById('zip')
+      const apiKey = '467355df4c808dd6134a3b64e9ace282'
 
+      // callback function
+      function handleWeatherData(data) {
+        tempEl.innerHTML = data.main.temp;
+        descEl.innerHTML = data.weather[0].description;
+      }
       // Define event listeners
       formEl.addEventListener('submit', (e) => {
         e.preventDefault()
         const zip = zipInput.value
-        getWeather(apiKey, zip)
+        getWeather(zip, apiKey, handleWeatherData)
       })
 
-  
-           
     </script>
   </body>
 </html>
