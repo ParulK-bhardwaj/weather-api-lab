@@ -47,3 +47,9 @@ h1, p {
 	border: 1px solid #000;
 	border-left: none;
 }
+
+#icon {
+	width: 50px;
+	height: 50px;
+	border: none;
+}

@@ -6,12 +6,33 @@
   </head>
   <body>
     <div class="container">
-      <h1 id="temp">
-        <!--Temp -->
+      <h1 id="city">
       </h1>
+      <p id="temp">
+        <!--Temp -->
+      </p>
       <p id="desc">
         <!-- description -->
       </p>
+      <p id="fl">
+        <!--Temp -->
+      </p>
+      <p id="temp_max">
+        <!-- description -->
+      </p>
+      <p id="temp_min">
+        <!-- description -->
+      </p>
+      <p id="wind">
+        <!-- description -->
+      </p>
+      <p id="pressure">
+        <!-- description -->
+      </p>
+      <p id="humd">
+        <!-- description -->
+      </p>
+      <img id="icon" />
       <form id="form">
         <input 
           id="zip" 
@@ -31,14 +52,30 @@
       // Get Element refererences
       const tempEl = document.getElementById('temp')
       const descEl = document.getElementById('desc')
+      const pressureEl = document.getElementById('pressure')
+      const humdEl = document.getElementById('humd')
+      const tempMaxEl = document.getElementById("temp_max")
+      const tempMinEl = document.getElementById("temp_min")
+      const cityEl = document.getElementById("city")
+      const flEl = document.getElementById("fl")
+      const windEl = document.getElementById("wind")
+      const iconEL = document.getElementById("icon")
       const formEl = document.getElementById('form')
       const zipInput = document.getElementById('zip')
       const apiKey = '467355df4c808dd6134a3b64e9ace282'
 
       // callback function
       function handleData(data) {
-        tempEl.innerHTML = data.main.temp
-        descEl.innerHTML = data.weather[0].description
+        cityEl.innerHTML = `City: ${data.city}`
+        tempEl.innerHTML = `Temperature: ${data.temp}`
+        descEl.innerHTML = `Description: ${data.desc}`
+        flEl.innerHTML = `Feels Like: ${data.feels_like}`
+        pressureEl.innerHTML = `Pressure: ${data.pressure}`
+        humdEl.innerHTML = `Humidity: ${data.humidity}`
+        tempMaxEl.innerHTML = `Max Temp.: ${data.temp_max}`
+        tempMinEl.innerHTML = `Min Temp.: ${data.temp_min}`
+        windEl.innerHTML = `Wind: ${data.wind}`
+        iconEL.src = `https://openweathermap.org/img/w/${data.icon}.png`;
       }
 
       function handleError(err) {
