@@ -1,9 +1,9 @@
 
 // Functions 
-async function getWeather(zip, apiKey) {
+async function getWeather(zip, apiKey, unit = 'imperial') {
     // Replace this with your own API key!
     const units = 'imperial'
-    const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apiKey}&units=${units}`
+    const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apiKey}&units=${unit}`
     // code stops here and waits for promise to resolve
     const res = await fetch(path) 
     // waits here for promise to resolve

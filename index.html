@@ -6,31 +6,32 @@
   </head>
   <body>
     <div class="container">
-      <h1 id="city">
-      </h1>
-      <p id="temp">
+      <h1 id="temp">
         <!--Temp -->
-      </p>
+      </h1>
+      <h2 id="city">
+        <!--City -->
+      </h2>
       <p id="desc">
-        <!-- description -->
+        <!-- Description -->
       </p>
       <p id="fl">
-        <!--Temp -->
+        <!--Feels like - Temperature -->
       </p>
       <p id="temp_max">
-        <!-- description -->
+        <!-- Maximum temperature -->
       </p>
       <p id="temp_min">
-        <!-- description -->
+        <!-- Minimum temperature -->
       </p>
       <p id="wind">
-        <!-- description -->
+        <!-- Wind speed -->
       </p>
       <p id="pressure">
-        <!-- description -->
+        <!-- Pressure -->
       </p>
       <p id="humd">
-        <!-- description -->
+        <!-- humidity -->
       </p>
       <img id="icon" />
       <form id="form">
@@ -85,7 +86,8 @@
       formEl.addEventListener('submit', (e) => {
         e.preventDefault()
         const zip = zipInput.value
-        getWeather(zip, apiKey)
+        const unit = 'metric'
+        getWeather(zip, apiKey, unit)
           .then(handleData)
           .catch(handleError)
       })
